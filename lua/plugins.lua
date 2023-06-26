@@ -24,6 +24,10 @@ return require('packer').startup(function(use)
 
 	use 'airblade/vim-gitgutter'
 
+	use 'mhartington/formatter.nvim'
+
+	use 'mfussenegger/nvim-lint'
+
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v2.x',
