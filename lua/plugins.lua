@@ -1,55 +1,69 @@
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
 -- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+vim.cmd([[packadd packer.nvim]])
 
-return require('packer').startup(function(use)
+return require("packer").startup(function(use)
 	-- Packer can manage itself
-	use 'wbthomason/packer.nvim'
+	use("wbthomason/packer.nvim")
 
-	use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+	-- Syntax highlighting on steroids
+	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 
-	use {
-		'nvim-telescope/telescope.nvim', tag = '0.1.1',
-		-- or                            , branch = '0.1.x',
-		requires = { { 'nvim-lua/plenary.nvim' } }
-	}
+	-- Lodash for lua
+	use("nvim-lua/plenary.nvim")
 
-	use { "catppuccin/nvim", as = "catppuccin" }
+	-- Awesome Fuzzy Finder
+	use({ "nvim-telescope/telescope.nvim", tag = "*" })
 
-	use 'tpope/vim-abolish'
-	use 'tpope/vim-commentary'
-	use 'tpope/vim-fugitive'
-	use 'tpope/vim-surround'
+	-- Nice colorscheme
+	use({ "catppuccin/nvim", as = "catppuccin" })
 
-	use 'airblade/vim-gitgutter'
+	-- Classics from vim era
+	use("tpope/vim-abolish")
+	use("tpope/vim-commentary")
+	use("tpope/vim-fugitive")
+	use("tpope/vim-surround")
 
-	use 'mhartington/formatter.nvim'
+	-- Git signs in gutter
+	use("airblade/vim-gitgutter")
 
-	use 'mfussenegger/nvim-lint'
+	-- All-in-one formatters, It's kind of slow so not sure I'll keep it.
+	use("mhartington/formatter.nvim")
 
-	use {
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v2.x',
+	-- All in one linters, Still need to be convinced about it.
+	use("mfussenegger/nvim-lint")
+
+	-- ready-to-go lsp config ta have a nice start (or not?)
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v2.x",
 		requires = {
 			-- LSP Support
-			{ 'neovim/nvim-lspconfig' }, -- Required
-			{       -- Optional
-				'williamboman/mason.nvim',
+			{ "neovim/nvim-lspconfig" }, -- Required
+			{ -- Optional
+				"williamboman/mason.nvim",
 				run = function()
 					---@diagnostic disable-next-line: param-type-mismatch
-					pcall(vim.cmd, 'MasonUpdate')
+					pcall(vim.cmd, "MasonUpdate")
 				end,
 			},
-			{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
+			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
 
 			-- Autocompletion
-			{ 'hrsh7th/nvim-cmp' }, -- Required
-			{ 'hrsh7th/cmp-nvim-lsp' }, -- Required
-			{ 'L3MON4D3/LuaSnip' }, -- Required
-		}
-	}
+			{ "hrsh7th/nvim-cmp" }, -- Required
+			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
+			{ "L3MON4D3/LuaSnip" }, -- Required
+		},
+	})
 
-	use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install",
-		setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+	-- Launches a server to preview markdown files in watch mode
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	})
 end)
