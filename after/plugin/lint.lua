@@ -7,9 +7,3 @@ lint.linters_by_ft = {
 	css = { "stylelint" },
 	scss = { "stylelint" },
 }
-
-vim.api.nvim_create_autocmd({ "InsertLeave" }, {
-	callback = function()
-		lint.try_lint()
-	end,
-})
