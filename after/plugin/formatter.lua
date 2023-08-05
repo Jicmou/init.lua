@@ -51,6 +51,14 @@ require("formatter").setup({
 			require("formatter.filetypes.javascript").prettier,
 		},
 
+		json = {
+			require("formatter.filetypes.json").fixjson,
+		},
+
+		markdown = {
+			require("formatter.filetypes.javascript").prettier,
+		},
+
 		-- Use the special "*" filetype for defining formatter configurations on
 		-- any filetype
 		["*"] = {
@@ -63,3 +71,9 @@ require("formatter").setup({
 
 vim.keymap.set("n", "<leader>f", vim.cmd.Format, {})
 vim.keymap.set("n", "<leader>F", vim.cmd.FormatWrite, {})
+
+-- vim.api.nvim_create_autocmd({ "InsertLeave" }, {
+-- 	callback = function()
+-- 		vim.cmd.Format()
+-- 	end,
+-- })
