@@ -8,10 +8,27 @@ lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
+-- make sure this servers are installed
+-- see :help lsp-zero.ensure_installed()
+lsp_zero.ensure_installed({
+	"eslint",
+	"lua_ls",
+	"rust_analyzer",
+	"tsserver",
+	"volar",
+	"cssls",
+	"jsonls",
+	"marksman",
+	"nginx_language_server",
+	"taplo",
+	"yamlls",
+})
+
 -- TODO: Consider not to setup at all, since volar does decent job already.
 lsp_config.tsserver.setup({ autostart = false })
 
 lsp_config.eslint.setup({
+	---@diagnostic disable-next-line: unused-local
 	on_attach = function(client, bufnr)
 		vim.api.nvim_create_autocmd("BufWritePre", {
 			buffer = bufnr,
@@ -82,10 +99,12 @@ lsp_config.lua_ls.setup({
 	},
 })
 
+-- Markdown language server
 lsp_config.marksman.setup({})
 
 lsp_config.rust_analyzer.setup({})
 
+-- TOML language server
 lsp_config.taplo.setup({})
 
 lsp_zero.setup()
