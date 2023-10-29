@@ -43,6 +43,14 @@ require("formatter").setup({
 			require("formatter.filetypes.javascript").prettier,
 		},
 
+		html = {
+			require("formatter.filetypes.html").prettier,
+		},
+
+		css = {
+			require("formatter.filetypes.css").prettier,
+		},
+
 		typescript = {
 			require("formatter.filetypes.javascript").prettier,
 		},
@@ -77,3 +85,13 @@ vim.keymap.set("n", "<leader>F", vim.cmd.FormatWrite, {})
 -- 		vim.cmd.Format()
 -- 	end,
 -- })
+
+-- Format on save
+local formatAutogroup = vim.api.nvim_create_augroup("FormatAutogroup", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+	pattern = "*",
+	callback = function()
+		vim.cmd("FormatWrite")
+	end,
+	group = formatAutogroup,
+})
