@@ -1,18 +1,39 @@
-local lsp = require("lsp-zero").preset({})
+local lsp_zero = require("lsp-zero").preset({})
+local lsp_config = require("lspconfig")
 
-lsp.preset("recommended")
+lsp_zero.preset("recommended")
 
 ---@diagnostic disable-next-line: unused-local
-lsp.on_attach(function(client, bufnr)
-	lsp.default_keymaps({ buffer = bufnr })
+lsp_zero.on_attach(function(client, bufnr)
+	lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
 -- TODO: Consider not to setup at all, since volar does decent job already.
-require("lspconfig").tsserver.setup({ autostart = false })
+lsp_config.tsserver.setup({ autostart = false })
 
-require("lspconfig").eslint.setup({})
+lsp_config.eslint.setup({
+	on_attach = function(client, bufnr)
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			buffer = bufnr,
+			command = "EslintFixAll",
+		})
+	end,
+	workingDirectories = { mode = "auto" },
+})
 
-require("lspconfig").volar.setup({
+lsp_config.nginx_language_server.setup({
+	filetypes = { "nginx", "authen.conf" },
+})
+
+lsp_config.cssls.setup({})
+
+lsp_config.yamlls.setup({
+	settings = {
+		redhat = { telemetry = { enabled = false } },
+	},
+})
+
+lsp_config.volar.setup({
 	filetypes = {
 		"javascript",
 		"javascriptreact",
@@ -29,14 +50,14 @@ require("lspconfig").volar.setup({
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-require("lspconfig").jsonls.setup({
+lsp_config.jsonls.setup({
 	filetypes = { "json", "jsonc" },
 	provideFormatter = true,
 	capabilities = capabilities,
 })
 
 -- (Optional) Configure lua language server for neovim
-require("lspconfig").lua_ls.setup({
+lsp_config.lua_ls.setup({
 	filetypes = { "lua" },
 	settings = {
 		Lua = {
@@ -61,9 +82,13 @@ require("lspconfig").lua_ls.setup({
 	},
 })
 
-require("lspconfig").marksman.setup({})
+lsp_config.marksman.setup({})
 
-lsp.setup()
+lsp_config.rust_analyzer.setup({})
+
+lsp_config.taplo.setup({})
+
+lsp_zero.setup()
 
 -- Make sure you setup `cmp` after lsp-zero
 local cmp = require("cmp")
@@ -76,3 +101,5 @@ cmp.setup({
 		["<C-Space>"] = cmp.mapping.complete(),
 	},
 })
+
+vim.keymap.set("n", "<leader>es", vim.cmd.EslintFixAll, {})
