@@ -19,7 +19,6 @@ lsp_zero.ensure_installed({
 	"cssls",
 	"jsonls",
 	"marksman",
-	"nginx_language_server",
 	"taplo",
 	"yamlls",
 })
@@ -39,7 +38,7 @@ lsp_config.eslint.setup({
 })
 
 lsp_config.nginx_language_server.setup({
-	filetypes = { "nginx", "authen.conf" },
+	filetypes = { "nginx" },
 })
 
 lsp_config.cssls.setup({})
