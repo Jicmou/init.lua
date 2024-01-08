@@ -46,6 +46,6 @@ vim.keymap.set("x", "<leader>p", '"_dP')
 vim.keymap.set("n", "<leader>d", '"_d')
 vim.keymap.set("v", "<leader>d", '"_d')
 
--- Remaps to navigate easily in the quickfix list
-vim.keymap.set("n", "C-j", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "C-k", "<cmd>cprevious<CR>zz")
+-- Navigate easily in the quickfix list
+vim.keymap.set("n", "<C-j>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-k>", "<cmd>cprevious<CR>zz")
