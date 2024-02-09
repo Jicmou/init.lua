@@ -21,6 +21,7 @@ lsp_zero.ensure_installed({
 	"marksman",
 	"taplo",
 	"yamlls",
+	"stylelint_lsp",
 })
 
 -- TODO: Consider not to setup at all, since volar does decent job already.
@@ -61,6 +62,12 @@ lsp_config.volar.setup({
 	},
 })
 
+lsp_config.stylelint_lsp.setup({
+	filetypes = {
+		"css",
+		"scss",
+	},
+})
 --
 --Enable (broadcasting) snippet capability for completion
 local capabilities = vim.lsp.protocol.make_client_capabilities()
