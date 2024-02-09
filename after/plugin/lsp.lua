@@ -45,7 +45,28 @@ lsp_config.nginx_language_server.setup({
 lsp_config.cssls.setup({})
 
 lsp_config.yamlls.setup({
+	on_attach = function(client)
+		-- get first line of current buffer
+		local firstLine = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1]
+
+		-- check if first lines begins with "apiVersion:"
+		local isKubernetes = string.match(string.sub(firstLine, 1, 11), "apiVersion:")
+
+		if isKubernetes then
+			client.config.settings.yaml.schemas = {
+				["Kubernetes"] = "/*.yaml",
+			}
+
+			client.notify("workspace/didChangeConfiguration", {
+				settings = client.config.settings,
+			})
+		end
+	end,
+
 	settings = {
+		yaml = {
+			schemas = {},
+		},
 		redhat = { telemetry = { enabled = false } },
 	},
 })
@@ -128,3 +149,14 @@ cmp.setup({
 })
 
 vim.keymap.set("n", "<leader>es", vim.cmd.EslintFixAll, {})
+-- vim.keymap.set("n", "<leader>k8", function()
+-- 	lsp_config.yamlls.setup({
+-- 		settings = {
+-- 			yaml = {
+-- 				schemas = {
+-- 					["Kubernetes"] = "/*.yaml",
+-- 				},
+-- 			},
+-- 		},
+-- 	})
+-- end)
