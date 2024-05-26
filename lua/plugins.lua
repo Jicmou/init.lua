@@ -66,4 +66,12 @@ return require("packer").startup(function(use)
 		end,
 		ft = { "markdown" },
 	})
+
+	-- File explorer that let us edit file system like a buffer
+	use({
+		"stevearc/oil.nvim",
+		config = function()
+			require("oil").setup()
+		end,
+	})
 end)
